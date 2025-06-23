@@ -1,9 +1,9 @@
 --[[
-    Script: Goomba Hub - Interface de Téléportation
+    Script: INS Hub - Interface de Téléportation
     Description: Une interface inspirée de Goomba Hub pour se téléporter aux emplacements définis.
     Instructions:
     1. Cliquez sur le nom d'une ville dans la liste de gauche.
-    2. Cliquez sur l'un des boutons "Teleport" à droite.
+    2. Cliquez sur le bouton "Teleport" à droite.
 ]]
 
 -- Configuration des emplacements (Villes et Coordonnées)
@@ -34,8 +34,8 @@ screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 screenGui.Parent = game:GetService("CoreGui")
 
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 450, 0, 280)
-mainFrame.Position = UDim2.new(0.5, -225, 0.5, -140)
+mainFrame.Size = UDim2.new(0, 450, 0, 230) -- Hauteur réduite
+mainFrame.Position = UDim2.new(0.5, -225, 0.5, -115) -- Position ajustée
 mainFrame.BackgroundColor3 = UIBgColor
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -53,7 +53,7 @@ Instance.new("UICorner", topBar).CornerRadius = UDim.new(0, 5)
 local titleLabel = Instance.new("TextLabel")
 titleLabel.Size = UDim2.new(0, 150, 1, 0)
 titleLabel.Position = UDim2.new(0, 10, 0, 0)
-titleLabel.Text = "Goomba Hub"
+titleLabel.Text = "INS Hub" -- CHANGEMENT: Nom de l'interface
 titleLabel.TextColor3 = Color3.new(1, 1, 1)
 titleLabel.Font = Enum.Font.SourceSansBold
 titleLabel.TextSize = 16
@@ -63,7 +63,7 @@ titleLabel.Parent = topBar
 
 local versionLabel = Instance.new("TextLabel")
 versionLabel.Size = UDim2.new(0, 150, 1, 0)
-versionLabel.Position = UDim2.new(0, 110, 0, 0)
+versionLabel.Position = UDim2.new(0, 80, 0, 0) -- Position ajustée pour le nouveau titre
 versionLabel.Text = "v4.2"
 versionLabel.TextColor3 = UIMainColor
 versionLabel.Font = Enum.Font.SourceSansBold
@@ -128,26 +128,19 @@ selectedLabel.TextXAlignment = Enum.TextXAlignment.Left
 selectedLabel.BackgroundTransparency = 1
 selectedLabel.Parent = rightPanel
 
--- Création des boutons de téléportation
-local function createTeleportButton(text, yPos)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(1, -10, 0, 30)
-    button.Position = UDim2.new(0, 5, 0, yPos)
-    button.BackgroundColor3 = UIAccentColor
-    button.Text = "  " .. text .. string.rep(" ", 15) .. ">"
-    button.TextColor3 = UITextColor
-    button.Font = Enum.Font.SourceSans
-    button.TextSize = 16
-    button.TextXAlignment = Enum.TextXAlignment.Left
-    button.Parent = rightPanel
-    Instance.new("UICorner", button).CornerRadius = UDim.new(0, 4)
-    Instance.new("UIStroke", button).Color = UIMainColor
-    
-    return button
-end
-
-local tpButton = createTeleportButton("Teleport", 70)
-local tpNoClipButton = createTeleportButton("Teleport (No-Clip)", 110)
+-- Création du bouton de téléportation unique
+local tpButton = Instance.new("TextButton")
+tpButton.Size = UDim2.new(1, -10, 0, 30)
+tpButton.Position = UDim2.new(0, 5, 0, 70)
+tpButton.BackgroundColor3 = UIAccentColor
+tpButton.Text = "  Teleport" .. string.rep(" ", 15) .. ">"
+tpButton.TextColor3 = UITextColor
+tpButton.Font = Enum.Font.SourceSans
+tpButton.TextSize = 16
+tpButton.TextXAlignment = Enum.TextXAlignment.Left
+tpButton.Parent = rightPanel
+Instance.new("UICorner", tpButton).CornerRadius = UDim.new(0, 4)
+Instance.new("UIStroke", tpButton).Color = UIMainColor
 
 -- Logique de téléportation
 local function doTeleport()
@@ -169,7 +162,6 @@ local function doTeleport()
 end
 
 tpButton.MouseButton1Click:Connect(doTeleport)
-tpNoClipButton.MouseButton1Click:Connect(doTeleport) -- Pour l'instant, fait la même chose
 
 -- Remplissage de la liste des villes
 for nomVille, _ in pairs(villes) do
